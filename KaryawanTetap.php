@@ -4,25 +4,24 @@
 require_once 'karyawan.php';
 
 class KaryawanTetap extends Karyawan {
-    // Properti tambahan spesifik
     private $tunjanganJabatan;
     private $bonusTahunan;
 
-    // Constructor mencakup parameter induk + parameter anak
     public function __construct(
         $id_karyawan, $nama_karyawan, $tanggal_masuk, $performa_nilai, $gajiDasar,
         $tunjanganJabatan, $bonusTahunan
     ) {
-        // Memanggil constructor dari abstract class induk
         parent::__construct($id_karyawan, $nama_karyawan, $tanggal_masuk, $performa_nilai, $gajiDasar);
         $this->tunjanganJabatan = $tunjanganJabatan;
         $this->bonusTahunan = $bonusTahunan;
     }
 
-    // Implementasi metode abstrak dari induk
+    /**
+     * OVERRIDING: Karyawan Tetap mendapatkan komponen gaji penuh
+     * Total Gaji = gajiDasar + tunjanganJabatan + bonusTahunan
+     */
     public function hitungTotalGaji() {
-        // Gaji dasar + tunjangan jabatan
-        return $this->gajiDasar + $this->tunjanganJabatan;
+        return $this->gajiDasar + $this->tunjanganJabatan + $this->bonusTahunan;
     }
 
     public function tampilkanFasilitas() {
@@ -34,7 +33,6 @@ class KaryawanTetap extends Karyawan {
         ];
     }
 
-    // Metode Query Spesifik menggunakan PDO
     public static function getDaftarTetap($db) {
         $sql = "SELECT id_karyawan, nama_karyawan, tanggal_masuk, performa_nilai, gaji_dasar, 
                        tunjangan_jabatan, bonus_tahunan 

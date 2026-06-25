@@ -4,7 +4,6 @@
 require_once 'karyawan.php';
 
 class KaryawanKontrak extends Karyawan {
-    // Properti tambahan spesifik
     private $durasiKontrakBulan;
     private $namaProyek;
 
@@ -17,9 +16,12 @@ class KaryawanKontrak extends Karyawan {
         $this->namaProyek = $namaProyek;
     }
 
-    // Implementasi metode abstrak dari induk
+    /**
+     * OVERRIDING: Karyawan Kontrak mendapatkan uang kehadiran flat Rp100.000
+     * Total Gaji = gajiDasar + 100000
+     */
     public function hitungTotalGaji() {
-        return $this->gajiDasar;
+        return $this->gajiDasar + 100000;
     }
 
     public function tampilkanFasilitas() {
@@ -30,7 +32,6 @@ class KaryawanKontrak extends Karyawan {
         ];
     }
 
-    // Metode Query Spesifik menggunakan PDO
     public static function getDaftarKontrak($db) {
         $sql = "SELECT id_karyawan, nama_karyawan, tanggal_masuk, performa_nilai, gaji_dasar, 
                        durasi_kontrak_bulan, nama_proyek 

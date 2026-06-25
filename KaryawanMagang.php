@@ -4,7 +4,6 @@
 require_once 'karyawan.php';
 
 class KaryawanMagang extends Karyawan {
-    // Properti tambahan spesifik
     private $insentifMagang;
     private $asalKampus;
 
@@ -12,13 +11,15 @@ class KaryawanMagang extends Karyawan {
         $id_karyawan, $nama_karyawan, $tanggal_masuk, $performa_nilai, $gajiDasar,
         $insentifMagang, $asalKampus
     ) {
-        // Gaji dasar diisi 0 karena magang murni menggunakan insentifMagang
         parent::__construct($id_karyawan, $nama_karyawan, $tanggal_masuk, $performa_nilai, $gajiDasar);
         $this->insentifMagang = $insentifMagang;
         $this->asalKampus = $asalKampus;
     }
 
-    // Implementasi metode abstrak dari induk
+    /**
+     * OVERRIDING: Karyawan Magang tidak menerima gaji dasar perusahaan
+     * Total Gaji = insentifMagang saja
+     */
     public function hitungTotalGaji() {
         return $this->insentifMagang;
     }
@@ -31,7 +32,6 @@ class KaryawanMagang extends Karyawan {
         ];
     }
 
-    // Metode Query Spesifik menggunakan PDO
     public static function getDaftarMagang($db) {
         $sql = "SELECT id_karyawan, nama_karyawan, tanggal_masuk, performa_nilai, 
                        insentif_magang, asal_kampus 
